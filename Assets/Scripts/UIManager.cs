@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonPattern<UIManager>
 {
     private int _score;
     [SerializeField] private float _secondsLeft = 600;
@@ -11,10 +11,10 @@ public class UIManager : MonoBehaviour
     [HideInInspector] public int maxScore;
 
     
-    public int minScoreRange = 3;
+    [SerializeField] private int minScoreRange = 3;
     
     [Header("Max score range MUST be larger than min score range.")]
-    public int maxScoreRange = 10;
+    [SerializeField] private int maxScoreRange = 10;
 
     public float SecondsLeft
     {
@@ -52,8 +52,9 @@ public class UIManager : MonoBehaviour
 
     public Text scoreText, timeText;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         maxScore = Random.Range(minScoreRange, maxScoreRange);
     }
 
@@ -62,9 +63,9 @@ public class UIManager : MonoBehaviour
         SecondsLeft -= Time.deltaTime;
     }
 
-    public void AddScore(int score)
+    public void AddScore()
     {
-        Score += score;
+        Score++;
     }
 
 }
