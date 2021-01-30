@@ -7,23 +7,37 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     [Range(5, 10)]
     public float speed = 10f;
 
-    public Transform holdArea, parentTrans;
+    public Transform holdArea;
+    Transform playerTrans;
+    
     public GameObject grabArea, desiredGrab, grabbedObject;
+
+    private Rigidbody playerRB;
 
     protected override void Awake()
     {
         base.Awake();
-        parentTrans = transform.parent;
+        playerTrans = transform.parent;
+        playerRB = transform.parent.GetComponent<Rigidbody>();
+
+        if (desiredGrab != null) desiredGrab = null;
+        if (grabbedObject != null) grabbedObject = null;
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.W)
+            || Input.GetKey(KeyCode.S)
+            || Input.GetKey(KeyCode.D)
+            || Input.GetKey(KeyCode.A))
+        {
+            Move();
+        }
     }
 
     private void Update()
     {
         Rotate();
-
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
-        {
-            Move();
-        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -48,8 +62,9 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     {
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
-        parentTrans.position += direction * speed * Time.deltaTime;
-        //Mathf.Clamp(0f, 1000f);
+        //parentTrans.position += direction * speed * Time.deltaTime;
+
+        playerRB.MovePosition(playerTrans.position + (direction * speed * Time.deltaTime));
     }
 
     public void GrabItem()
