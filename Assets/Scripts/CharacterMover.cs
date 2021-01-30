@@ -9,7 +9,10 @@ public class CharacterMover : SingletonPattern<CharacterMover>
 
     public Transform holdArea;
     Transform playerTrans;
-    
+
+    private int grabbableMask = ((1 << 9) | (1 << 10));
+
+
     public GameObject grabArea, desiredGrab, grabbedObject;
 
     private Rigidbody playerRB;
@@ -56,17 +59,13 @@ public class CharacterMover : SingletonPattern<CharacterMover>
         if (hit.collider == null) return;
 
         transform.LookAt(new Vector3(hit.point.x, 1f, hit.point.z));
-        //playerTrans.position = new Vector3(playerTrans.position.x, 0f, playerTrans.position.z);
     }
 
     public void Move()
     {
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
-        //parentTrans.position += direction * speed * Time.deltaTime;
-
         playerRB.MovePosition(playerTrans.position + (direction * speed * Time.deltaTime));
-        //playerTrans.position = new Vector3(playerTrans.position.x, 0f, playerTrans.position.z);
     }
 
     public void GrabItem()
@@ -75,11 +74,13 @@ public class CharacterMover : SingletonPattern<CharacterMover>
         grabArea.GetComponent<BoxCollider>().enabled = true;
         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out RaycastHit hit, 1000f, 1 << 9);
+        Physics.Raycast(ray, out RaycastHit hit, 1000f, grabbableMask);
 
         if (hit.collider == null) return;
 
         desiredGrab = hit.collider.gameObject;
+
+        StartCoroutine(GrabDelay());
         
         //Debug.Log("Want to grab " + desiredGrab.name);
     }
@@ -96,6 +97,8 @@ public class CharacterMover : SingletonPattern<CharacterMover>
 
     private void OnTriggerStay(Collider other)
     {
+        if (desiredGrab = null) return;
+
         if (other.gameObject == desiredGrab)
         {
             other.gameObject.transform.parent = holdArea;
@@ -108,8 +111,20 @@ public class CharacterMover : SingletonPattern<CharacterMover>
             grabbedObject = other.gameObject;
             
             grabArea.GetComponent<BoxCollider>().enabled = false;
+
+            if (grabbedObject.GetComponent<Page>() != null)
+            {
+                grabbedObject.GetComponent<Page>().Collect();
+                grabbedObject = null;
+            }
             
             desiredGrab = null;
         }
+    }
+
+    IEnumerator GrabDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        desiredGrab = null;
     }
 }

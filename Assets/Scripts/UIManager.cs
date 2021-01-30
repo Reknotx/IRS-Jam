@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : SingletonPattern<UIManager>
@@ -15,6 +16,8 @@ public class UIManager : SingletonPattern<UIManager>
     
     [Header("Max score range MUST be larger than min score range.")]
     [SerializeField] private int maxScoreRange = 10;
+
+    public GameObject gameWinCanvas, gameLostCanvas;
 
     public float SecondsLeft
     {
@@ -32,6 +35,8 @@ public class UIManager : SingletonPattern<UIManager>
                     timeText.text = "Time left: " + Mathf.Floor(minutes).ToString() + ":0" + Mathf.Floor(seconds).ToString();
                 else
                     timeText.text = "Time left: " + Mathf.Floor(minutes).ToString() + ":" + Mathf.Floor(seconds).ToString();
+
+                if (_secondsLeft <= 0) DisplayGameEnd(false);
             }
         }
     }
@@ -47,6 +52,8 @@ public class UIManager : SingletonPattern<UIManager>
             {
                 scoreText.text = "Score: " + _score + "/" + maxScore;
             }
+
+            if (_score == maxScore) DisplayGameEnd(true);
         }
     }
 
@@ -66,6 +73,45 @@ public class UIManager : SingletonPattern<UIManager>
     public void AddScore()
     {
         Score++;
+    }
+
+    private void DisplayGameEnd(bool gameWon)
+    {
+        Time.timeScale = 0f;
+
+        if (gameWon)
+            DisplayGameWin();
+        else
+            DisplayGameLost();
+    }
+
+    private void DisplayGameWin()
+    {
+        if (gameWinCanvas != null)
+        {
+            gameWinCanvas.SetActive(true);
+        }
+    }
+
+    private void DisplayGameLost()
+    {
+        if (gameLostCanvas != null)
+        {
+            gameLostCanvas.SetActive(true);
+        }
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 
 }
