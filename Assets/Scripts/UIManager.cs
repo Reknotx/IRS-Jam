@@ -29,9 +29,9 @@ public class UIManager : MonoBehaviour
                 float seconds = _secondsLeft % 60;
 
                 if (seconds < 10)
-                    timeText.text = "Time remaining: " + minutes + ":0" + seconds;
+                    timeText.text = "Time left: " + minutes + ":0" + seconds;
                 else
-                    timeText.text = "Time remaining: " + minutes + ":" + seconds;
+                    timeText.text = "Time left: " + minutes + ":" + seconds;
             }
         }
     }
