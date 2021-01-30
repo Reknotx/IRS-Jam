@@ -6,15 +6,15 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private int _score;
-    private float _secondsLeft;
+    [SerializeField] private float _secondsLeft = 600;
 
-    public int maxScore;
+    [HideInInspector] public int maxScore;
 
     
-    public int minScoreRange;
+    public int minScoreRange = 3;
     
     [Header("Max score range MUST be larger than min score range.")]
-    public int maxScoreRange;
+    public int maxScoreRange = 10;
 
     public float SecondsLeft
     {
@@ -29,9 +29,9 @@ public class UIManager : MonoBehaviour
                 float seconds = _secondsLeft % 60;
 
                 if (seconds < 10)
-                    timeText.text = "Time left: " + minutes + ":0" + seconds;
+                    timeText.text = "Time left: " + Mathf.Floor(minutes).ToString() + ":0" + Mathf.Floor(seconds).ToString();
                 else
-                    timeText.text = "Time left: " + minutes + ":" + seconds;
+                    timeText.text = "Time left: " + Mathf.Floor(minutes).ToString() + ":" + Mathf.Floor(seconds).ToString();
             }
         }
     }

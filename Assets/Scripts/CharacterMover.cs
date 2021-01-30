@@ -56,6 +56,7 @@ public class CharacterMover : SingletonPattern<CharacterMover>
         if (hit.collider == null) return;
 
         transform.LookAt(new Vector3(hit.point.x, 1f, hit.point.z));
+        //playerTrans.position = new Vector3(playerTrans.position.x, 0f, playerTrans.position.z);
     }
 
     public void Move()
@@ -65,6 +66,7 @@ public class CharacterMover : SingletonPattern<CharacterMover>
         //parentTrans.position += direction * speed * Time.deltaTime;
 
         playerRB.MovePosition(playerTrans.position + (direction * speed * Time.deltaTime));
+        //playerTrans.position = new Vector3(playerTrans.position.x, 0f, playerTrans.position.z);
     }
 
     public void GrabItem()
