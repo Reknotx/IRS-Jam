@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UIManager : SingletonPattern<UIManager>
 {
     private int _score;
-    [SerializeField] private float _secondsLeft = 600;
+    private float _secondsLeft = 600;
 
     [HideInInspector] public int maxScore;
 
@@ -63,6 +63,7 @@ public class UIManager : SingletonPattern<UIManager>
     {
         base.Awake();
         maxScore = Random.Range(minScoreRange, maxScoreRange);
+        Score = 0;
     }
 
     private void Update()
