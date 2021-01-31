@@ -519,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   holdArea: {fileID: 1986239960963719532}
-  forceModifier: 1200
+  forceModifier: 1000
   grabArea: {fileID: 4883837973853108714}
   desiredGrab: {fileID: 0}
   grabbedObject: {fileID: 0}

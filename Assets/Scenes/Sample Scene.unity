@@ -793,11 +793,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Holder
       objectReference: {fileID: 0}
-    - target: {fileID: 4883837973887114114, guid: d4043686d830a4944b08244b0932541e,
-        type: 3}
-      propertyPath: forceModifier
-      value: 1000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4043686d830a4944b08244b0932541e, type: 3}
 --- !u!1001 &157446902
