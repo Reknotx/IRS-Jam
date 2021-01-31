@@ -12,7 +12,7 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     
     Transform playerTrans;
 
-    private int grabbableMask = (1 << 9) | (1 << 10);
+    private int grabbableMask = (1 << 9) | (1 << 10) | (1 << 17);
     
     [Range(500, 1500)]
     public int forceModifier = 500;

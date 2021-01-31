@@ -8,7 +8,7 @@ public class GrabCollision : MonoBehaviour
     {
         if (CharacterMover.Instance.desiredGrab == null) return;
 
-        //Debug.Log("Collided with: " + other.name);
+        Debug.Log("Collided with: " + other.name);
         CharacterMover.Instance.ExamineCollision(other);
     }
 }

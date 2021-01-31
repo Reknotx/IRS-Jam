@@ -22,10 +22,10 @@ public class BreakableObj : MonoBehaviour
             pieces.Add(child.gameObject);
             child.GetComponent<Rigidbody>().isKinematic = true;
             
-            if (child.GetComponent<Collider>() != null)
-            {
-                child.GetComponent<Collider>().enabled = false;
-            }
+            //if (child.GetComponent<Collider>() != null)
+            //{
+            //    child.GetComponent<Collider>().enabled = false;
+            //}
         }
 
         enabled = false;
@@ -49,7 +49,13 @@ public class BreakableObj : MonoBehaviour
             foreach (GameObject piece in pieces)
             {
                 piece.transform.parent = null;
-                piece.GetComponent<BoxCollider>().enabled = true;
+                Collider[] colliders = piece.GetComponents<Collider>();
+
+                foreach (Collider collider in colliders)
+                {
+                    collider.enabled = true;
+                }
+
                 piece.GetComponent<Rigidbody>().useGravity = true;
                 piece.GetComponent<Rigidbody>().isKinematic = false;
             }
