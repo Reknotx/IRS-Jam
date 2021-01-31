@@ -62,6 +62,11 @@ public class UIManager : SingletonPattern<UIManager>
     protected override void Awake()
     {
         base.Awake();
+        if (gameWinCanvas != null)
+            gameWinCanvas.SetActive(false);
+
+        if (gameLostCanvas != null)
+            gameLostCanvas.SetActive(false);
     }
 
     private void Update()

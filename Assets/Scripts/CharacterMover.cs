@@ -228,30 +228,30 @@ public class CharacterMover : SingletonPattern<CharacterMover>
         {
             rotation += 360;
         }
-        Debug.Log(rotation);
+        //Debug.Log(rotation);
 
         if (rotation > 45 && rotation < 135)
         {
             ///Facing right
-            Debug.Log("Facing right");
+            //Debug.Log("Facing right");
             return Dir.right;
         }
         else if (rotation <= 45 || rotation >= 315)
         {
             ///Facing Forward
-            Debug.Log("Facing forward");
+            //Debug.Log("Facing forward");
             return Dir.forward;
         }
         else if (rotation >= 135 && rotation <= 225)
         {
             ///Facing down
-            Debug.Log("Facing back");
+            //Debug.Log("Facing back");
             return Dir.back;
         }
         else
         {
             ///Facing left
-            Debug.Log("Facing left");
+            //Debug.Log("Facing left");
             return Dir.left;
         }
 
