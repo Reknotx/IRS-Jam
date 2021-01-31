@@ -15,11 +15,11 @@ TagManager:
   - 
   - Terrain
   - Grabbable
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Page
+  - Held
+  - Player
+  - Door
+  - House
   - 
   - 
   - 
