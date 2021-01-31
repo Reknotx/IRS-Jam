@@ -7,7 +7,7 @@ public class BreakableObj : MonoBehaviour
     public List<GameObject> pieces = new List<GameObject>();
     private Rigidbody parentRB;
 
-    [Range(0.5f, 5f)]
+    [Range(0.5f, 20f)]
     public float velocityToSmash = 1f;
 
     public bool Thrown { get; set; } = false;
