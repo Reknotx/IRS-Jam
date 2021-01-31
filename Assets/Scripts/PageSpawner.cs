@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PageSpawner : SingletonPattern<PageSpawner>
 {
-    
+
+    [SerializeField] private int minSpawnRange = 3;
+
+    [Header("Max score range MUST be larger than min score range.")]
+    [SerializeField] private int maxSpawnRange = 10;
+
     [Header("List of papers in the world that can be spawned.")]
     public List<GameObject> spawnPositions = new List<GameObject>();
 
@@ -17,11 +22,20 @@ public class PageSpawner : SingletonPattern<PageSpawner>
 
     private void Start()
     {
+        foreach (GameObject paper in spawnPositions)
+        {
+            paper.SetActive(false);
+        }
+
+        UIManager.Instance.maxScore = Random.Range(minSpawnRange, maxSpawnRange);
+
         int maxAmount = UIManager.Instance.maxScore;
 
         if (maxAmount >= spawnPositions.Count)
         {
             spawnedPapers = spawnPositions;
+
+            UIManager.Instance.maxScore = spawnPositions.Count;
 
             foreach (GameObject paper in spawnedPapers)
             {
@@ -50,5 +64,7 @@ public class PageSpawner : SingletonPattern<PageSpawner>
             }
 
         }
+
+        UIManager.Instance.Score = 0;
     }
 }

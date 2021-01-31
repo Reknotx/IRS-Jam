@@ -6,7 +6,7 @@ public class Page : MonoBehaviour
 {
     public void Collect()
     {
-        UIManager.Instance.AddScore();
+        UIManager.Instance.Score++;
         Destroy(gameObject);
     }
 }

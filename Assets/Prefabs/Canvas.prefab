@@ -170,7 +170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4264833125600244375
 RectTransform:
   m_ObjectHideFlags: 0
@@ -434,9 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxScore: 0
-  minScoreRange: 3
-  maxScoreRange: 10
-  gameWinCanvas: {fileID: 0}
+  gameWinCanvas: {fileID: 7147929718157575351}
   gameLostCanvas: {fileID: 0}
   scoreText: {fileID: 7958595028125440352}
   timeText: {fileID: 7958595026152719275}
