@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PageSpawner : SingletonPattern<PageSpawner>
 {
+    
+    [Header("List of papers in the world that can be spawned.")]
     public List<GameObject> spawnPositions = new List<GameObject>();
 
     [HideInInspector] public List<GameObject> spawnedPapers = new List<GameObject>();
