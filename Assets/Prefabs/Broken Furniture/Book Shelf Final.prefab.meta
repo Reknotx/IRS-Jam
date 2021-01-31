@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Models/Knight Stand.meta
+guid: a046ecb92f4fe1d43904a239a4f7f42b
+folderAsset: yes
+DefaultImporter:
+=======
 guid: 21b58a9eac3182548a538feffd0b4f29
 PrefabImporter:
+>>>>>>> master:Assets/Prefabs/Broken Furniture/Book Shelf Final.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
