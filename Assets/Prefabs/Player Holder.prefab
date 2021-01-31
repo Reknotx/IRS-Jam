@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4883837973853108713}
   - component: {fileID: 4883837973853108712}
   - component: {fileID: 2112827223}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Grab area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   holdArea: {fileID: 1986239960963719532}
+  forceModifier: 500
   grabArea: {fileID: 4883837973853108714}
   desiredGrab: {fileID: 0}
   grabbedObject: {fileID: 0}
