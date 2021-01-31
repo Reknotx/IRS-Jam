@@ -12,10 +12,10 @@ public class UIManager : SingletonPattern<UIManager>
     [HideInInspector] public int maxScore;
 
     
-    [SerializeField] private int minScoreRange = 3;
+    //[SerializeField] private int minScoreRange = 3;
     
-    [Header("Max score range MUST be larger than min score range.")]
-    [SerializeField] private int maxScoreRange = 10;
+    //[Header("Max score range MUST be larger than min score range.")]
+    //[SerializeField] private int maxScoreRange = 10;
 
     public GameObject gameWinCanvas, gameLostCanvas;
 
@@ -46,7 +46,7 @@ public class UIManager : SingletonPattern<UIManager>
         get => _score;
         set
         {
-            _score += value;
+            _score = value;
             
             if (scoreText != null)
             {
@@ -62,8 +62,6 @@ public class UIManager : SingletonPattern<UIManager>
     protected override void Awake()
     {
         base.Awake();
-        maxScore = Random.Range(minScoreRange, maxScoreRange);
-        Score = 0;
     }
 
     private void Update()
