@@ -12,6 +12,8 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     
     Transform playerTrans;
 
+    public Animator playerAnim;
+
     private int grabbableMask = (1 << 9) | (1 << 10) | (1 << 17);
     
     [Range(500, 1500)]
@@ -33,13 +35,13 @@ public class CharacterMover : SingletonPattern<CharacterMover>
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W)
-            || Input.GetKey(KeyCode.S)
-            || Input.GetKey(KeyCode.D)
-            || Input.GetKey(KeyCode.A))
-        {
+        //if (Input.GetKey(KeyCode.W)
+        //    || Input.GetKey(KeyCode.S)
+        //    || Input.GetKey(KeyCode.D)
+        //    || Input.GetKey(KeyCode.A))
+        //{
             Move();
-        }
+        //}
     }
 
     private void Update()
@@ -71,7 +73,188 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     {
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
+        if (direction != Vector3.zero)
+        {
+            playerAnim.SetBool("IsRunning", true);
+
+            playerAnim.SetBool("IsRunningForward", false);
+            playerAnim.SetBool("IsRunningRight", false);
+            playerAnim.SetBool("IsRunningBack", false);
+            playerAnim.SetBool("IsRunningLeft", false);
+
+            if (Input.GetAxis("Vertical") > 0f)
+            {
+                ///Running forward
+                switch (GetFacingDirection())
+                {
+                    case Dir.forward:
+                        playerAnim.SetBool("IsRunningForward", true);
+                        break;
+
+                    case Dir.right:
+                        playerAnim.SetBool("IsRunningLeft", true);
+                        break;
+
+                    case Dir.back:
+                        playerAnim.SetBool("IsRunningBack", true);
+                        break;
+
+                    case Dir.left:
+                        playerAnim.SetBool("IsRunningRight", true);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else if (Input.GetAxis("Vertical") < 0f)
+            {
+                ///Running back
+                switch (GetFacingDirection())
+                {
+                    case Dir.forward:
+                        playerAnim.SetBool("IsRunningBack", true);
+                        break;
+
+                    case Dir.right:
+                        playerAnim.SetBool("IsRunningRight", true);
+                        break;
+
+                    case Dir.back:
+                        playerAnim.SetBool("IsRunningForward", true);
+                        break;
+
+                    case Dir.left:
+                        playerAnim.SetBool("IsRunningLeft", true);
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+            //else
+            //{
+            //    playerAnim.SetBool("IsRunningForward", false);
+            //    playerAnim.SetBool("IsRunningBack", false);
+            //}
+
+            if (Input.GetAxis("Horizontal") > 0f)
+            {
+                ///Running right
+                switch (GetFacingDirection())
+                {
+                    case Dir.forward:
+                        playerAnim.SetBool("IsRunningRight", true);
+                        break;
+
+                    case Dir.right:
+                        playerAnim.SetBool("IsRunningForward", true);
+                        break;
+
+                    case Dir.back:
+                        playerAnim.SetBool("IsRunningLeft", true);
+                        break;
+
+                    case Dir.left:
+                        playerAnim.SetBool("IsRunningBack", true);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else if (Input.GetAxis("Horizontal") < 0f)
+            {
+                ///Running left
+                switch (GetFacingDirection())
+                {
+                    case Dir.forward:
+                        playerAnim.SetBool("IsRunningLeft", true);
+                        break;
+
+                    case Dir.right:
+                        playerAnim.SetBool("IsRunningBack", true);
+                        break;
+
+                    case Dir.back:
+                        playerAnim.SetBool("IsRunningRight", true);
+                        break;
+
+                    case Dir.left:
+                        playerAnim.SetBool("IsRunningForward", true);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+
+        }
+        else
+        {
+            playerAnim.SetBool("IsRunning", false);
+            playerAnim.SetBool("IsRunningForward", false);
+            playerAnim.SetBool("IsRunningRight", false);
+            playerAnim.SetBool("IsRunningBack", false);
+            playerAnim.SetBool("IsRunningLeft", false);
+        }
+
+
         playerRB.MovePosition(playerTrans.position + (direction * speed * Time.deltaTime));
+    }
+
+    enum Dir 
+    { 
+        /// <summary> Facing in the forward direction </summary>
+        forward, 
+
+        /// <summary> Facing in the right direction </summary>
+        right, 
+
+        /// <summary> Facing in the down direction. </summary>
+        back, 
+
+        /// <summary> Facing in the left direction. </summary>
+        left 
+    }
+
+    private Dir GetFacingDirection()
+    {
+        float rotation = transform.localRotation.eulerAngles.y;
+
+        if (rotation < 0f)
+        {
+            rotation += 360;
+        }
+        Debug.Log(rotation);
+
+        if (rotation > 45 && rotation < 135)
+        {
+            ///Facing right
+            Debug.Log("Facing right");
+            return Dir.right;
+        }
+        else if (rotation <= 45 || rotation >= 315)
+        {
+            ///Facing Forward
+            Debug.Log("Facing forward");
+            return Dir.forward;
+        }
+        else if (rotation >= 135 && rotation <= 225)
+        {
+            ///Facing down
+            Debug.Log("Facing back");
+            return Dir.back;
+        }
+        else
+        {
+            ///Facing left
+            Debug.Log("Facing left");
+            return Dir.left;
+        }
+
     }
 
     public void GrabItem()
