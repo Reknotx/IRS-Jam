@@ -7,11 +7,15 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     [Range(5, 10)]
     public float speed = 10f;
 
+
     public Transform holdArea;
+    
     Transform playerTrans;
 
-    private int grabbableMask = ((1 << 9) | (1 << 10));
-
+    private int grabbableMask = (1 << 9) | (1 << 10) | (1 << 17);
+    
+    [Range(500, 1500)]
+    public int forceModifier = 500;
 
     public GameObject grabArea, desiredGrab, grabbedObject;
 
@@ -42,12 +46,14 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     {
         Rotate();
 
-        if (Input.GetMouseButtonDown(0))
+        if (grabbedObject == null && Input.GetMouseButtonDown(0))
+            GrabItem();
+        else if (grabbedObject != null && Input.GetMouseButtonUp(0))
+            ThrowItem();
+
+        if (grabbedObject != null)
         {
-            if (grabbedObject == null)
-                GrabItem();
-            else
-                ThrowItem();
+            grabbedObject.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -80,16 +86,26 @@ public class CharacterMover : SingletonPattern<CharacterMover>
 
         desiredGrab = hit.collider.gameObject;
 
-        //StartCoroutine(GrabDelay());
+        StartCoroutine(GrabDelay());
 
-        Debug.Log("Want to grab " + desiredGrab.name);
+        //Debug.Log("Want to grab " + desiredGrab.name);
     }
 
     public void ThrowItem()
     {
-        grabbedObject.GetComponent<Rigidbody>().useGravity = true;
-        grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
-        
+        Rigidbody grabbedRB = grabbedObject.GetComponent<Rigidbody>();
+        grabbedRB.useGravity = true;
+        grabbedRB.isKinematic = false;
+        grabbedRB.drag = 0;
+        grabbedRB.angularDrag = 0.05f;
+        grabbedRB.AddForce(transform.forward * forceModifier);
+
+        if (grabbedObject.GetComponent<BreakableObj>() != null)
+        {
+            grabbedObject.GetComponent<BreakableObj>().enabled = true;
+            grabbedObject.GetComponent<BreakableObj>().Thrown = true;
+        }
+
         grabbedObject.transform.parent = null;
         grabbedObject.layer = 9;
 
@@ -102,17 +118,20 @@ public class CharacterMover : SingletonPattern<CharacterMover>
 
         if (other.gameObject == desiredGrab)
         {
-            Debug.Log("Grabbing " + other.name);
-            other.gameObject.GetComponent<Rigidbody>().useGravity = false;
-            other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            
-            other.gameObject.transform.parent = holdArea;
-            
-            other.gameObject.transform.localPosition = Vector3.zero;
+            //Debug.Log("Grabbing " + other.name);
+            Rigidbody grabbedRB = other.gameObject.GetComponent<Rigidbody>();
+
+            grabbedRB.useGravity = false;
+            //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            grabbedRB.drag = Mathf.Infinity;
+            grabbedRB.angularDrag = Mathf.Infinity;
             
             grabbedObject = other.gameObject;
-            
 
+            grabbedObject.transform.parent = holdArea;
+            
+            grabbedObject.transform.localPosition = Vector3.zero;
+            
             if (grabbedObject.GetComponent<Page>() != null)
             {
                 grabbedObject.GetComponent<Page>().Collect();
@@ -121,6 +140,10 @@ public class CharacterMover : SingletonPattern<CharacterMover>
             else
             {
                 grabbedObject.layer = 11;
+                foreach (Transform child in grabbedObject.transform)
+                {
+                    child.gameObject.layer = 11;
+                }
             }
             
             grabArea.GetComponent<BoxCollider>().enabled = false;
@@ -130,7 +153,7 @@ public class CharacterMover : SingletonPattern<CharacterMover>
 
     IEnumerator GrabDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.2f);
         desiredGrab = null;
     }
 }
