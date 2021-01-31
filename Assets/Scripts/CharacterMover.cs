@@ -46,13 +46,10 @@ public class CharacterMover : SingletonPattern<CharacterMover>
     {
         Rotate();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (grabbedObject == null)
-                GrabItem();
-            else
-                ThrowItem();
-        }
+        if (grabbedObject == null && Input.GetMouseButtonDown(0))
+            GrabItem();
+        else if (grabbedObject != null && Input.GetMouseButtonUp(0))
+            ThrowItem();
 
         if (grabbedObject != null)
         {
@@ -143,6 +140,10 @@ public class CharacterMover : SingletonPattern<CharacterMover>
             else
             {
                 grabbedObject.layer = 11;
+                foreach (Transform child in grabbedObject.transform)
+                {
+                    child.gameObject.layer = 11;
+                }
             }
             
             grabArea.GetComponent<BoxCollider>().enabled = false;

@@ -55,12 +55,17 @@ public class BreakableObj : MonoBehaviour
                 {
                     collider.enabled = true;
                 }
+                piece.layer = 9;
 
                 piece.GetComponent<Rigidbody>().useGravity = true;
                 piece.GetComponent<Rigidbody>().isKinematic = false;
             }
 
             Destroy(gameObject);
+        }
+        else
+        {
+            this.enabled = false;
         }
     }
 }
