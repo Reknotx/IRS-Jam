@@ -22,6 +22,14 @@ public class PageSpawner : SingletonPattern<PageSpawner>
 
     private void Start()
     {
+        foreach (Transform paper in transform)
+        {
+            if (!spawnPositions.Contains(paper.gameObject))
+            {
+                spawnPositions.Add(paper.gameObject);
+            }
+        }
+
         foreach (GameObject paper in spawnPositions)
         {
             paper.SetActive(false);
