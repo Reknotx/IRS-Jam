@@ -302,12 +302,15 @@ public class CharacterMover : SingletonPattern<CharacterMover>
         if (other.gameObject == desiredGrab)
         {
             //Debug.Log("Grabbing " + other.name);
-            Rigidbody grabbedRB = other.gameObject.GetComponent<Rigidbody>();
+            if (other.gameObject.GetComponent<Rigidbody>() != null)
+            {
+                Rigidbody grabbedRB = other.gameObject.GetComponent<Rigidbody>();
 
-            grabbedRB.useGravity = false;
-            //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            grabbedRB.drag = Mathf.Infinity;
-            grabbedRB.angularDrag = Mathf.Infinity;
+                grabbedRB.useGravity = false;
+                //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                grabbedRB.drag = Mathf.Infinity;
+                grabbedRB.angularDrag = Mathf.Infinity;
+            }
             
             grabbedObject = other.gameObject;
 

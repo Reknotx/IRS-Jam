@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5868919536438248869}
   - component: {fileID: 8610494329928190977}
   - component: {fileID: 5074457386442117342}
+  - component: {fileID: 7843803003818410582}
   m_Layer: 10
   m_Name: TaxPaper
   m_TagString: Untagged
@@ -94,3 +95,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7843803003818410582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110198069655264225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59319fbbf642673429b1f14e7223f11b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

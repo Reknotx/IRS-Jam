@@ -35,9 +35,10 @@ public class PageSpawner : SingletonPattern<PageSpawner>
             paper.SetActive(false);
         }
 
-        UIManager.Instance.maxScore = Random.Range(minSpawnRange, maxSpawnRange);
+        int maxAmount = Random.Range(minSpawnRange, maxSpawnRange);
+        
+        UIManager.Instance.maxScore = maxAmount;
 
-        int maxAmount = UIManager.Instance.maxScore;
 
         if (maxAmount >= spawnPositions.Count)
         {

@@ -230,6 +230,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5150591939470098515}
   - component: {fileID: 8823943066621780720}
+  - component: {fileID: 1265488439372443602}
+  - component: {fileID: 3043636681011015194}
   m_Layer: 0
   m_Name: Broken Laptop 1
   m_TagString: Untagged
@@ -269,3 +271,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1265488439372443602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749795395842188556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d025fd6d5c72e774ea54f7e9fe4b57bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pieces: []
+  velocityToSmash: 2.13
+--- !u!65 &3043636681011015194
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749795395842188556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.614145, y: 0.43016094, z: 0.45060372}
+  m_Center: {x: 0.0012776554, y: 0.21081498, z: -0.0012776852}

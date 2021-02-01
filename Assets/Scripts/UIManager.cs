@@ -7,11 +7,10 @@ using UnityEngine.UI;
 public class UIManager : SingletonPattern<UIManager>
 {
     private int _score;
-    private float _secondsLeft = 600;
+    private float _secondsLeft = 300;
 
     [HideInInspector] public int maxScore;
 
-    
     //[SerializeField] private int minScoreRange = 3;
     
     //[Header("Max score range MUST be larger than min score range.")]
@@ -72,11 +71,6 @@ public class UIManager : SingletonPattern<UIManager>
     private void Update()
     {
         SecondsLeft -= Time.deltaTime;
-    }
-
-    public void AddScore()
-    {
-        Score++;
     }
 
     private void DisplayGameEnd(bool gameWon)
